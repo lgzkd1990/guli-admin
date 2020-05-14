@@ -62,7 +62,7 @@
       </el-table-column>
     </el-table>
 
-  <!-- 分页 -->
+    <!-- 分页 -->
     <el-pagination
       :current-page="page"
       :page-size="limit"
@@ -75,42 +75,43 @@
   </div>
 </template>
 <script>
-//引入调用teacher.js文件
+// 引入调用teacher.js文件
 import course from '@/api/edu/course'
 
 export default {
-    //写核心代码位置
-    // data:{
-    // },
-    data() { //定义变量和初始值
-        return {
-          list:null,//查询之后接口返回集合
-          page:1,//当前页
-          limit:10,//每页记录数
-          total:0,//总记录数
-          courseQuery:{} //条件封装对象
-        }
-    },
-    created() { //页面渲染之前执行，一般调用methods定义的方法
-        //调用
-        this.getList() 
-    },
-    methods:{  //创建具体的方法，调用teacher.js定义的方法
-        //讲师列表的方法
-        getList() {
-            course.getListCourse()
-                .then(response =>{//请求成功
-                    //response接口返回的数据
-                    this.list = response.data.list
-                }) 
-        },
-        resetData() {//清空的方法
-            //表单输入项数据清空
-            this.courseQuery = {}
-            //查询所有讲师数据
-            this.getList()
-        }
- 
+  // 写核心代码位置
+  // data:{
+  // },
+  data() { // 定义变量和初始值
+    return {
+      list: null, // 查询之后接口返回集合
+      page: 1, // 当前页
+      limit: 10, // 每页记录数
+      total: 0, // 总记录数
+      courseQuery: {} // 条件封装对象
     }
+  },
+  created() { // 页面渲染之前执行，一般调用methods定义的方法
+    // 调用
+    this.getList()
+  },
+  methods: { // 创建具体的方法，调用teacher.js定义的方法
+    // 讲师列表的方法
+    getList() {
+      course.getCourseListPage(this.page, this.limit, this.courseQuery)
+        .then(response => { // 请求成功
+          // response接口返回的数据
+          this.list = response.data.list
+          this.total = response.data.total
+        })
+    },
+    resetData() { // 清空的方法
+      // 表单输入项数据清空
+      this.courseQuery = {}
+      // 查询所有讲师数据
+      this.getList()
+    }
+
+  }
 }
 </script>
